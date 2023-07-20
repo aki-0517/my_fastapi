@@ -1,10 +1,7 @@
-# FastAPIをインポート
 from fastapi import FastAPI
 
-# FastAPIのインスタンス作成
-app = FastAPI()
+from api.routers import task, done
 
-# GETメソッドでルートURLにアクセスされたときの処理
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+app = FastAPI()
+app.include_router(task.router)
+app.include_router(done.router)
