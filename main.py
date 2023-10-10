@@ -1,10 +1,17 @@
-# FastAPIをインポート
-from fastapi import FastAPI
+from typing import Optional
 
-# FastAPIのインスタンス作成
+
+from fastapi import FastAPI, Path
+
+
 app = FastAPI()
 
-# GETメソッドでルートURLにアクセスされたときの処理
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+
+@app.get("/items/{item_id}/comments/{comment_id}")
+async def read_comment(
+    item_id: int = Path(...),
+    comment_id: Optional[int] = None,
+):
+    if comment_id is None:
+        return {"item_id": item_id}
+    return {"item_id": item_id, "comment_id": comment_id}
